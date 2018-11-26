@@ -1,0 +1,94 @@
+{extend name="public/base" /}
+
+{block name="content"}
+
+
+<div class="container">
+    <div class="top-container">
+        <div class="mid-area">
+            <div class="slide-holder" id="slide-holder">
+                <a href="#" class="slide-prev"><i class="slide-arrow-left"></i></a>
+                <a href="#" class="slide-next"><i class="slide-arrow-right"></i></a>
+                <ul class="slideshow">
+                    {volist name="main_slides" id="vo"}
+                    <li><a href="{$vo.url}" class="item-large"><img class="ad-pic" src="{$vo.image}" /></a></li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="list-container">
+
+            </div>
+        </div>
+    </div>
+    <div class="right-sidebar">
+        <div class="right-ad">
+            <ul class="slidepic">
+                <li><a><img src="{$right_slides.image}" /></a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="content-container">
+        <div class="no-recom-container">
+            <div class="floor-content-start">
+
+                <div class="floor-content">
+                    <div class="floor-header">
+                        <h3>美食推荐</h3>
+                        <ul class="reco-words">
+                            {volist name="meishicategorys" id="vo"}
+                            <li><a href="{:url('lists/index',['id'=>$vo.id])}" target="_blank">{$vo.name}</a></li>
+                            {/volist}
+                            <li><a href="{:url('lists/index',['id'=>1])}" class="no-right-border no-right-padding" target="_blank">全部<span class="all-cate-arrow"></span></a></li>
+                        </ul>
+                    </div>
+                    <ul class="itemlist eight-row-height">
+                        {if condition="$datas"}
+                        {volist name="datas" id="vo"}
+                        <li class="j-card">
+                            <a>
+                                <div class="imgbox">
+                                    <ul class="marketing-label-container">
+                                        <li class="marketing-label marketing-free-appoint"></li>
+                                    </ul>
+                                    <div class="range-area">
+                                        <div class="range-bg"></div>
+                                        <div class="range-inner">
+
+                                        </div>
+                                    </div>
+                                    <div class="borderbox">
+                                        <img src="{$vo.image}" />
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="contentbox">
+                                <a href="{:url('index/detail/index',['id'=>$vo.id])}" target="_blank">
+                                    <div class="header">
+                                        <h4 class="title ">【{$vo.location_ids|countLocation}店通用】</h4>
+                                    </div>
+                                    <p>{$vo.name}</p>
+                                </a>
+                                <div class="add-info"></div>
+                                <div class="pinfo">
+                                    <span class="price"><span class="moneyico">¥</span>{$vo.current_price}</span>
+                                    <span class="ori-price">价值<span class="price-line">¥<span>{$vo.origin_price}</span></span></span>
+                                </div>
+                                <div class="footer">
+                                    <span class="comment">4.6分</span><span class="sold">已售{$vo.buy_count}</span>
+                                    <div class="bottom-border"></div>
+                                </div>
+                            </div>
+                        </li>
+                        {/volist}
+                        {else /}
+                        <span style="color:red;font-size: 16px;">该城市下没有子分类数据</span>
+                        {/if}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

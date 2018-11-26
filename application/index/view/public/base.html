@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{block name="title"}o2o团购网-首页{/block}</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="__STATIC__/index/css/base.css" />
+    <link rel="stylesheet" href="__STATIC__/index/css/common.css" />
+    <link rel="stylesheet" href="__STATIC__/index/css/index.css" />
+    {block name="css"}{/block}
+    <script type="text/javascript" src="__STATIC__/index/js/html5shiv.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/respond.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/index/js/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<div class="header-bar">
+    <div class="header-inner">
+        <ul class="father">
+            <li><a>{$city->name}</a></li>
+            <li>|</li>
+            <li class="city">
+                <a>切换城市<span class="arrow-down-logo"></span></a>
+                <div class="city-drop-down">
+                    <h3>热门城市</h3>
+                    <ul class="son">
+                        {volist name="citys" id="vo"}
+                        <li><a href="{:url('index/index/index',['city'=>$vo.uname])}">{$vo.name}</a></li>
+                        {/volist}
+                    </ul>
+
+                </div>
+            </li>
+            {if condition="$user"}
+            <li><a href="{:url('index/user/logout')}">退出</a></li>
+            <li>|</li>
+            <li>欢饮您：{$user.username}</li>
+            {else /}
+            <li><a href="{:url('index/user/register')}">注册</a></li>
+            <li>|</li>
+            <li><a href="{:url('index/user/login')}">登录</a></li>
+            {/if}
+            <div style="float: right;">
+            <li><a href="{:url('bis/login/index')}">商户中心</a></li>
+            <li>|</li>
+            </div>
+        </ul>
+    </div>
+</div>
+{block name="header"}
+<div class="search">
+    <img src="__STATIC__/index/image/logo.png" />
+
+</div>
+<div class="nav-bar-header">
+    <div class="nav-inner">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <span class="item">全部分类</span>
+                <div class="left-menu">
+                    {volist name="cates" id="cat"}
+                    <div class="level-item">
+                        <div class="first-level">
+                            <dl>
+                                <dt class="title"><a href="{:url('index/lists/index',['id'=>$key])}" target="_top">{$cat[0]}</a></dt>
+                                {volist name="$cat[1]" id="vo" length="2"}
+                                <dd><a href="{:url('index/lists/index',['id'=>$vo.id])}" target="_top" class="">{$vo.name}</a></dd>
+                                {/volist}
+                            </dl>
+                        </div>
+                        <div class="second-level">
+                            <div class="section">
+                                <div class="section-item clearfix no-top-border">
+                                    <h3>其他分类</h3>
+                                    <ul>
+                                        {volist name="cat[1]" id="vo"}
+                                        <li><a target="_blank" href="{:url('lists/index/index',['id'=> $vo.id])}">{$vo.name}</a></li>
+                                        {/volist}
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+            </li>
+            <li class="nav-item"><a href="{:url('index/index/index')}" class="item first active">首页</a></li>
+            <li class="nav-item"><a href="{:url('index/lists/index')}" class="item">团购</a></li>
+        </ul>
+    </div>
+</div>
+{/block}
+{block name="content"}
+
+{/block}
+<div class="footer-content">
+    <div class="copyright-info">
+
+    </div>
+</div>
+<script src="__STATIC__/lib/layer/layer.js"></script>
+<script>
+    var width = 800 * $("#slide-holder ul li").length;
+    $("#slide-holder ul").css({width: width + "px"});
+
+    //轮播图自动轮播
+    var time = setInterval(moveleft,5000);
+
+    //轮播图左移
+    function moveleft(){
+        $("#slide-holder ul").animate({marginLeft: "-737px"},600, function () {
+            $("#slide-holder ul li").eq(0).appendTo($("#slide-holder ul"));
+            $("#slide-holder ul").css("marginLeft","0px");
+        });
+    }
+
+    //轮播图右移
+    function moveright(){
+        $("#slide-holder ul").css({marginLeft: "-737px"});
+        $("#slide-holder ul li").eq(($("#slide-holder ul li").length)-1).prependTo($("#slide-holder ul"));
+        $("#slide-holder ul").animate({marginLeft: "0px"},600);
+    }
+
+    //右滑箭头点击事件
+    $(".slide-next").click(function () {
+        clearInterval(time);
+        moveright();
+        time = setInterval(moveleft,5000);
+    });
+
+    //左滑箭头点击事件
+    $(".slide-prev").click(function () {
+        clearInterval(time);
+        moveleft();
+        time = setInterval(moveleft,5000);
+    });
+</script>
+{block name="js"}
+{/block}
+</body>
+</html>

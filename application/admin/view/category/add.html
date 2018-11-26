@@ -1,0 +1,66 @@
+<!--包含头部文件-->
+{include file="public/header" /}
+<body>
+<div class="page-container">
+	<form class="form form-horizontal form-o2o-add" id="form-o2o-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>生活服务分类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="name" name="name">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="parent_id" class="select">
+					<option value="0">一级分类</option>
+					{volist name="categorys" id="vo"}
+					<option value="{$vo.id}">--{$vo.name}</option>
+					{/volist}
+				</select>
+				</span>
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button id="save"  type="submit" class="btn btn-primary radius" ><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<!--包含头部文件-->
+{include file="public/footer" /}
+
+<script>
+$('#save').click(function () {
+	$.ajax({
+		url:"{:url('admin/category/add')}",
+        type:"post",
+		data:$('#form-o2o-add').serialize(),
+		dataType:"json",
+		success:function (data) {
+			if(data.code==1){
+			    layer.msg(data.msg,{
+			        icon:1,
+					time:2000
+				},function () {
+                    window.location.reload()
+                })
+			}else{
+			    layer.msg(data.msg,{
+			        icon:2,
+					time:2000
+				})
+			}
+        }
+	})
+    return false;
+})
+</script>
+</body>
+</html>
